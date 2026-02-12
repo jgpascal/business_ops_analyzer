@@ -1,6 +1,7 @@
-Init
+para cada venta:
+    obtener tienda
+    calcular importe
+    acumular por tienda
 
-region = string "R2"
-customer = string 
 
 

@@ -1,30 +1,14 @@
-def main():
-    print("Business Ops Analyzer iniciado")
+from pathlib import Path
+from ingestion import cargar_ventas
 
 
-if __name__ == "__main__":
-    main()
+def calcular_importe(venta: dict) -> float:
+    unidades = int(venta["unidades"])
+    precio = float(venta["precio"])
+    return unidades * precio
 
 
-
-print ("Ingrese datos de venta")
-tienda = input ("Tienda ? ")
-producto = input ("Producto ? ")
-unidades = int (input ("Cantidad ? "))
-precio = int (input ("Precio unitario ? "))
-venta = {"tienda":tienda, "producto":producto, "unidades":unidades, "precio":precio}
-
-# print (venta)
-
-def calcular_importe(venta):
-    
-    return venta["unidades"] * venta["precio"]
-
-print ("Importe de la venta: ", calcular_importe(venta))
-
-
-
-def total_por_tienda(ventas):
+def total_por_tienda(ventas: list[dict]) -> dict:
     totales = {}
 
     for venta in ventas:
@@ -34,4 +18,18 @@ def total_por_tienda(ventas):
 
     return totales
 
-print ("Ventas por tienda:", total_por_tienda([venta]))
+
+def main():
+    print("Business Ops Analyzer iniciado")
+
+    ventas = cargar_ventas(Path("data/ventas.csv"))
+    print("Ventas cargadas:", ventas)
+
+    importe_total = sum(calcular_importe(venta) for venta in ventas)
+    print("Importe total de ventas:", importe_total)
+
+    print("Ventas por tienda:", total_por_tienda(ventas))
+
+
+if __name__ == "__main__":
+    main()
