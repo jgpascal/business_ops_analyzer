@@ -29,15 +29,21 @@ def procesar_ventas(ventas_crudas):
         ventas_ok = []
         errores = []
         for i, venta in enumerate(ventas_crudas):
+            #print("Keys:", venta.keys())
+          #  break
             try:
                 venta_normalizada = validar_y_normalizar_venta(venta)
                 ventas_ok.append(venta_normalizada)
             
             except Exception as e:
                 errores.append({
-                     "index": i,
-                     "venta": venta,
-                     "error": str(e),
+                "index": i,
+                "fecha": venta.get("fecha"),
+                "tienda": venta.get("tienda"),
+                "producto": venta.get("producto"),
+                "unidades": venta.get("unidades"),
+                "precio": venta.get("precio"),
+                "error": str(e)
                     })
                 
         return ventas_ok, errores
